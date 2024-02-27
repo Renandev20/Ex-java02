@@ -1,21 +1,52 @@
+import java.util.Scanner;
+
 public class Cliente {
-    public String name;
-    protected int cpf;
-    protected int rg;
-    public String sexo;
+    private String nome;
+    private Conta conta;
+    private Banco banco;
+
+    public Cliente(String nome, Conta conta, Banco banco) {
+        this.nome = nome;
+        this.conta = conta;
+        this.banco = banco;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public Conta getConta() {
+        return conta;
+    }
+
+    public void setBanco(Banco banco) {
+        this.banco = banco;
+    }
+
+    public Banco getBanco() {
+        return banco;
+    }
+
+    public static Cliente cadastrarCliente(Banco banco) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Digite o nome do cliente:");
+        String nome = scanner.nextLine();
+
+        System.out.println("Digite o número da conta:");
+        int numeroConta = scanner.nextInt();
+
+        Conta conta = new Conta(numeroConta, 0);
+        banco.adicionarCliente(new Cliente(nome, conta, banco));
+
+        return new Cliente(nome, conta, banco);
+    }
 
     public static void main(String[] args) {
-        Cliente c1 = new Cliente();
-        c1.name = "Renan";
-        c1.cpf = 9741;
-        c1.rg = 999;
-        c1.sexo = "Homen";
-        System.out.println(c1);
-        System.out.println("o cpf do cliente é "+ c1.cpf);
-        System.out.println("o  sexo do  cliente é "+ c1.rg);
-        System.out.println("o rg do é  cliente "+ c1.sexo);
-        System.out.println("o nome do cliente  é "+ c1.name);
-
-
+        Banco banco = new Banco();
+        Cliente cliente = cadastrarCliente(banco);
+        System.out.println("Cliente cadastrado:");
+        System.out.println("Nome: " + cliente.getNome());
+        System.out.println("Número da conta: " + cliente.getConta().getId());
     }
 }
